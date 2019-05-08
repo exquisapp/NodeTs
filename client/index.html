@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>NHC</title>
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,700" rel="stylesheet">
+    <style>
+    body{
+        font-family: 'Raleway'
+    }
+    .chats{
+        background: orangered;
+        padding: 20px;
+        text-align: center;
+        color: aliceblue;
+    }
+    .chat-input-wrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .chat-input{
+        height: 30px;
+    }
+    .send-button{
+        background: orangered;
+        padding: 12px;
+        padding-left: 30px;
+        padding-right: 30px;
+        border: none;
+        color: aliceblue;
+        cursor: pointer;
+
+    }
+    </style>
+</head>
+<body>
+   <h2>Welcome to NHC</h2> 
+   <section>
+       <div class="chats">
+
+       </div>
+       <br>
+       <div class="chat-input-wrapper">
+            <input class="chat-input" type="text" placeholder="enter your chat here"  ><button class="send-button" onclick="sendMessage()">Send</button>
+       </div>
+   </section>
+</body>
+<script src="./chats.js"></script>
+<script>
+document.getElementsByClassName("chats")[0].innerHTML = chats;
+(() => {
+    const txtbox = document.getElementsByClassName('chat-input')[0];
+    txtbox.onkeydown = (e) => {
+    if (e.key === "Enter") {
+        sendMessage();
+    }
+   
+    };
+})()
+function sendMessage(){
+    const msg = document.getElementsByClassName("chat-input")[0].value;
+    if (msg){
+        fetch(`/api/chat?message=${msg}`)
+        .then(res => res.json())
+        .then(data => window.location = '/')
+        .catch(err => alert("Please Refresh and Try Again"));
+    }
+    
+}
+</script>
+</html>
